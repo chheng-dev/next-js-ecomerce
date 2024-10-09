@@ -1,6 +1,7 @@
 import { Button } from '@nextui-org/react'
 import { MoveRight } from 'lucide-react'
 import React from 'react'
+import CountdownTimer from '../sd/CountdownTimer'
 
 function DealsMonth() {
   return (
@@ -11,27 +12,7 @@ function DealsMonth() {
             <h4>Deals of the Month</h4>
             <p className='text-xs my-1'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia nobis laborum ab cum ipsum magnam ratione, possimus omnis, deserunt ducimus vero nemo adipisci dolores fugit eos optio sint tempora eligendi.</p>
 
-            <div className='my-4 flex gap-3 items-center justify-start text-center'>
-              <p className='py-1 px-2 rounded-md border border-gray-300 text-2xl font-black w-16'>
-                120 
-                <span className='block text-sm font-semibold'>Days</span>
-              </p>
-
-              <p className='py-1 px-2 rounded-md border border-gray-300 text-2xl font-black w-16'>
-                12
-                <span className='block text-sm font-semibold'>Hours</span>
-              </p>
-
-              <p className='py-1 px-2 rounded-md border border-gray-300 text-2xl font-black w-16'>
-                15
-                <span className='block text-sm font-semibold'>Mins</span>
-              </p>
-
-              <p className='py-1 px-2 rounded-md border border-gray-300 text-2xl font-black w-16'>
-                10 
-                <span className='block text-sm font-semibold'>Secs</span>
-              </p>
-            </div>
+            <CountdownTimer targetDate="2024-12-31T00:00:00" />
 
             <Button size='sm' className='my-5 bg-primary text-white'>
               View All Products <MoveRight className='text-primay w-3 h-3' />
