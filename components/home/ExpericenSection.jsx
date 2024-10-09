@@ -39,6 +39,7 @@ const ExpericenSection = () => {
           experienceItems.map((item, idx) => {
             return(
               <ExperienceCard 
+                key={idx}
                 icon={item.icon}
                 title={item.title}
                 description={item.description}

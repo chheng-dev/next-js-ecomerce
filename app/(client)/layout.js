@@ -1,5 +1,7 @@
 import FooterComp from "@/components/layouts/FooterComp";
 import HeaderComp from "@/components/layouts/HeaderComp";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 export default function Layout({ children }) {
   return (
