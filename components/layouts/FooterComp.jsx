@@ -34,21 +34,21 @@ function FooterComp() {
                 <div className="lg:mx-auto text-left">
                     <h4 className="text-white font-medium mb-7">Infomation</h4>
                     <ul className="text-sm  transition-all duration-500">
-                        <li className="mb-6"><a href="javascript:;"  className="text-white hover:text-white">My Account</a></li>
-                        <li className="mb-6"><a href="javascript:;"  className="text-white hover:text-white">Login</a></li>
-                        <li className="mb-6"><a href="javascript:;"  className="text-white hover:text-white">My Cart</a></li>
-                        <li className="mb-6"><a href="javascript:;"  className="text-white hover:text-white">My Wishlist</a></li>
-                        <li className="mb-6"><a href="javascript:;"  className="text-white hover:text-white">Checkout</a></li>
+                        <li className="mb-6"><a href="#"  className="text-white hover:text-white">My Account</a></li>
+                        <li className="mb-6"><a href="#"  className="text-white hover:text-white">Login</a></li>
+                        <li className="mb-6"><a href="#"  className="text-white hover:text-white">My Cart</a></li>
+                        <li className="mb-6"><a href="#"  className="text-white hover:text-white">My Wishlist</a></li>
+                        <li className="mb-6"><a href="#"  className="text-white hover:text-white">Checkout</a></li>
                     </ul>
                 </div>
                 <div className="lg:mx-auto text-left ">
                     <h4 className="text-lg text-white font-medium mb-7">Service</h4>
                     <ul className="text-sm  transition-all duration-500">
-                        <li className="mb-6"><a href="javascript:;"  className="text-white hover:text-white">About Us</a></li>
-                        <li className="mb-6"><a href="javascript:;"  className=" text-white hover:text-white">Careers</a></li>
-                        <li className="mb-6"><a href="javascript:;"  className=" text-white hover:text-white">Delivery Infomation</a></li>
-                        <li className="mb-6"><a href="javascript:;"  className=" text-white hover:text-white">Privacy Policy</a></li>
-                        <li className="mb-6"><a href="javascript:;"  className=" text-white hover:text-white">Terms & Conditions</a></li>
+                        <li className="mb-6"><a href="#"  className="text-white hover:text-white">About Us</a></li>
+                        <li className="mb-6"><a href="#"  className=" text-white hover:text-white">Careers</a></li>
+                        <li className="mb-6"><a href="#"  className=" text-white hover:text-white">Delivery Infomation</a></li>
+                        <li className="mb-6"><a href="#"  className=" text-white hover:text-white">Privacy Policy</a></li>
+                        <li className="mb-6"><a href="#"  className=" text-white hover:text-white">Terms & Conditions</a></li>
                     </ul>
                 </div>
                 <div className="lg:mx-auto text-left lg:col-span-2">
@@ -70,8 +70,8 @@ function FooterComp() {
                   />
                 </div>
             </div>
-            <div class="py-7 border-t border-[#29282D]">
-              <div class="grid grid-cols-3 gap-2">
+            <div className="py-7 border-t border-[#29282D]">
+              <div className="grid grid-cols-3 gap-2">
                 <div>
                   <img 
                     className='w-32'
