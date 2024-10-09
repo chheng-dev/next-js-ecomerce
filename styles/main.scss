@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./values.scss";
+
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+/* :root {
+  --background: #ffffff;
+  --foreground: #171717;
+} */
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+} */
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: "Nunito", sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+
+h1 {
+  font-size: 3rem !important;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 2.5rem !important;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 2rem !important;
+  font-weight: bold;
+}
+
+h4 {
+  font-size: 1.5rem !important;
+  font-weight: bold;
+}
+h5 {
+  font-size: 0.9rem !important;
+  font-weight: bold;
+}
+h6{
+  font-size: 0.5rem !important;
+  font-weight: bold;
+}
+
+input:focus{
+  border-color: white !important;
+}
