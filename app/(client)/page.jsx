@@ -16,7 +16,6 @@ function page() {
         <DealsMonth />
       </div>
       <CustomerReview />
-      <ExpericenSection />
     </div>
   )
 }
