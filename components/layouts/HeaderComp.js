@@ -163,11 +163,11 @@ function HeaderComp() {
         </a>
         <div className="flex items-center md:order-2 space-x-1 md:space-x-4 rtl:space-x-reverse">
           <div className='items-center justify-end md:order-2 space-x-1 md:space-x-4 rtl:space-x-reverse hidden lg:flex'>
-            <SearchIcon className='w-4 h-4' />
-            <HeartIcon className='w-4 h-4' />
-            <ShoppingBag className='w-4 h-4' />
+            <SearchIcon className='w-4 h-4 cursor-pointer' />
+            <HeartIcon className='w-4 h-4 cursor-pointer' />
+            <ShoppingBag className='w-4 h-4 cursor-pointer' />
 
-            <Button color='primary' size='sm'>Login</Button>
+            <Button color='primary' className='text-white' size='sm'>Login</Button>
           </div>
 
           <button data-collapse-toggle="mega-menu" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mega-menu" aria-expanded="false">
@@ -267,7 +267,7 @@ function HeaderComp() {
             </li>
 
             <li>
-              <Link href="/product-listing" className="block py-2 px-3 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0">All Products</Link>
+              <Link href="/products" className="block py-2 px-3 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0">All Products</Link>
             </li>
 
             <li>
