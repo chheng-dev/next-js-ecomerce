@@ -1,6 +1,9 @@
+import { ToastContainer } from "react-toastify";
 import Footer from "./components/Layouts/Footer";
 import Header from "./components/Layouts/Header";
 import Sidebar from "./components/Layouts/Sidebar";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export const metadata = {
   title: "Admin Dashboard",
@@ -10,6 +13,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <Header />
       <div className="flex justify-between">
         <div className="w-1/6">

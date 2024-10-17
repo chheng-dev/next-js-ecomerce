@@ -1,6 +1,6 @@
 "use client";
 
-import { FolderKanban, Gauge, Heart, List, Box, Settings, LogOut } from "lucide-react";
+import { FolderKanban, Gauge, Heart, List, Box, Settings, LogOut, LayoutGridIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -16,6 +16,11 @@ const Sidebar = () => {
       label: "Product",
       icon: FolderKanban,
       path: "/admin/products",
+    },
+    {
+      label: "Category",
+      icon: LayoutGridIcon,
+      path: "/admin/category",
     },
     {
       label: "Favorites",

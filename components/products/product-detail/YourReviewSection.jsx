@@ -12,11 +12,11 @@ const YourReviewSection = () => {
 
 
   return (
-    <div class="py-6">
-      <h5 class="text-2xl font-bold text-gray-800 mb-12">Add your Review</h5>
+    <div className="py-6">
+      <h5 className="text-2xl font-bold text-gray-800 mb-12">Add your Review</h5>
       
       <form>
-        <div class="mb-4">
+        <div className="mb-4">
           <div className='pb-4'>
             <Input 
               key={'outside'}
