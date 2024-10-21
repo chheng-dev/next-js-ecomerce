@@ -1,5 +1,4 @@
 import axios from "axios";
-import { color } from "framer-motion";
 
 const API_URL_BASE = process.env.NEXT_PUBLIC_BASE_API_URL;
 

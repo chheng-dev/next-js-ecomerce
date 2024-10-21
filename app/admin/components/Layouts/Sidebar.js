@@ -13,14 +13,19 @@ const Sidebar = () => {
       path: "/admin/dashboard",
     },
     {
-      label: "Product",
-      icon: FolderKanban,
-      path: "/admin/products",
+      label: "Categories",
+      icon: LayoutGridIcon,
+      path: "/admin/categories",
     },
     {
-      label: "Category",
+      label: "Brands",
       icon: LayoutGridIcon,
-      path: "/admin/category",
+      path: "/admin/brands",
+    },
+    {
+      label: "Products",
+      icon: FolderKanban,
+      path: "/admin/products",
     },
     {
       label: "Favorites",

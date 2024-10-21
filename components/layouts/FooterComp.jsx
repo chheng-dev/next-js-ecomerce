@@ -5,7 +5,7 @@ import React from 'react'
 function FooterComp() {
   return (
     <footer className="w-full bg-primary text-white mt-8">
-        <div className="mx-auto container px-4 sm:px-6 lg:px-8">
+        {/* <div className="mx-auto container px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 md:gap-8 py-10 max-sm:max-w-sm max-sm:mx-auto gap-y-8">
                 <div className="col-span-1 mb-10 lg:col-span-2 lg:mb-0">
                   <a href="https://pagedone.io/"  className="flex justify-center lg:justify-start text-2xl font-black">
@@ -89,7 +89,7 @@ function FooterComp() {
                 </div>
               </div>
             </div>
-        </div>
+        </div> */}
     </footer>
   )
 }

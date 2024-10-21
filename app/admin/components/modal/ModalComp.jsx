@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from '@nextui-org/react'; // Adjust import based on your UI library
 import PropTypes from 'prop-types';
 
-const CreateCategoryModal = ({ isOpen, onOpenChange, title, content, onAction, btnTitle, btnClose }) => {
+const ModalComp = ({ 
+  isOpen, 
+  onOpenChange, 
+  title, 
+  content, 
+  onAction, 
+  btnTitle, 
+  btnClose }) => {  
   return (
     <Modal 
       backdrop="opaque" 
@@ -44,7 +51,7 @@ const CreateCategoryModal = ({ isOpen, onOpenChange, title, content, onAction, b
   );
 };
 
-CreateCategoryModal.propTypes = {
+ModalComp.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onOpenChange: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
@@ -52,4 +59,4 @@ CreateCategoryModal.propTypes = {
   onAction: PropTypes.func.isRequired,
 };
 
-export default CreateCategoryModal;
+export default ModalComp;
