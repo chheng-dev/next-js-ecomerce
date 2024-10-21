@@ -1,8 +1,8 @@
 import { ToastContainer } from "react-toastify";
-import Footer from "./components/Layouts/Footer";
 import Header from "./components/Layouts/Header";
 import Sidebar from "./components/Layouts/Sidebar";
 import 'react-toastify/dist/ReactToastify.css';
+import "@uploadthing/react/styles.css";
 
 
 export const metadata = {
@@ -34,7 +34,6 @@ export default function RootLayout({ children }) {
           {children}
         </div>
       </div>
-      <Footer />
     </>
   );
 }

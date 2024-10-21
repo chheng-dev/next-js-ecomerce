@@ -3,12 +3,13 @@
 import { Button, Input, Modal, Pagination } from '@nextui-org/react';
 import React, { Component } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue } from '@nextui-org/react';
-import ModalComp from '../components/modal/category/ModalComp';
+import ModalComp from '../components/modal/ModalComp';
 import { toast } from 'react-toastify';
 import { CategoryService } from '@/app/(client)/services/categoryService';
 import { FileEdit, Trash2Icon } from 'lucide-react';
 import PropTypes from 'prop-types';
 import Humanize from '@/lib/humanize';
+import CategoryModal from '../components/modal/category/CategoryModal';
 
 class Page extends Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class Page extends Component {
       loading: false,
       isModalOpen: false,
       categories: [],
-      isCategoryNameValid: true,
+      isCategoryNameValid: false,
       page: 1,
       rowsPerPage: 10,
       isDeleteModalOpen: false,
@@ -103,38 +104,37 @@ class Page extends Component {
   async handleSubmit() {
     const { categoryToEdit, categoryName, categoryColor } = this.state;
   
-    if (!categoryName.trim(), !categoryColor.trim()) {
+    if (!categoryName.trim() || !categoryColor.trim()) {
       this.setState({ isCategoryNameValid: false });
       return;
     }
-    
+  
     try {
-      this.setState({ loading: true });
-      
+      this.setState({ loading: true, isCategoryNameValid: true });
+  
       let response;
-
-      if(categoryToEdit) {
+  
+      if (categoryToEdit) {
         response = await CategoryService.updateCategoryById(categoryToEdit.id, categoryName, categoryColor);
       } else {
         response = await CategoryService.createCategory(categoryName, categoryColor);
       }
-
-      if(response.ok){
+  
+      if (response.ok) {
         const successMessage = categoryToEdit ? 'Category updated successfully!' : 'New category created successfully!';
         toast.success(successMessage);
-
+  
         this.setState({
-          categoryColor: '#2020a7',
+          categoryColor: '#2020a7', 
           categoryName: '',
           isModalOpen: false,
-          categoryToEdit: null
+          categoryToEdit: null,
         });
-
+  
         this.getCategories();
       } else {
-        toast.error(`Something went wrong: ${response.data}`);
+        toast.error(`Something went wrong: ${response.data || response.statusText}`);
       }
-
     } catch (error) {
       toast.error('An error occurred while making the request');
       console.error('Error details:', error);
@@ -142,13 +142,15 @@ class Page extends Component {
       this.setState({ loading: false });
     }
   }
+  
 
   handleEditCategory(category){
     this.setState({ 
       isModalOpen: true,
       categoryToEdit: category,
       categoryName: category.title,
-      categoryColor: category.color
+      categoryColor: category.color,
+      isCategoryNameValid: true
     });
   }
 
@@ -196,7 +198,8 @@ class Page extends Component {
       page, 
       rowsPerPage, 
       isDeleteModalOpen,
-      categoryToEdit
+      categoryToEdit,
+      loading
     } = this.state;
 
     const columns = [
@@ -317,37 +320,16 @@ class Page extends Component {
           </div>
         </div>
 
-        <ModalComp
+        <CategoryModal 
           isOpen={isModalOpen}
           onOpenChange={this.handleOpenChange}
-          title={isEditMode ? 'Update Category' : 'Add Category'}
-          content={
-            <>
-              <Input
-                type="text"
-                label="Category name"
-                placeholder="Enter Category name"
-                labelPlacement="outside"
-                value={categoryName}
-                onChange={this.handleCategoryNameChange}
-                isRequired
-                validationState={!isCategoryNameValid ? 'invalid' : 'valid'} 
-                errorMessage={!isCategoryNameValid ? 'Category name is required' : ''}
-              />
-
-              <Input
-                type="color"
-                label="Category color"
-                placeholder="Choose Category color"
-                labelPlacement="outside"
-                value={categoryColor}
-                onChange={this.handleCategoryColorChange}
-              />
-            </>
-          }
-          btnTitle={isEditMode ? 'Update' : 'Save'}
-          btnClose="Cancel"
-          onAction={this.handleSubmit}
+          isEditMode={isEditMode}
+          categoryName={categoryName}
+          categoryColor={categoryColor}
+          isCategoryNameValid={isCategoryNameValid}
+          onCategoryNameChange={this.handleCategoryNameChange}
+          onCategoryColorChange={this.handleCategoryColorChange}
+          onSubmit={this.handleSubmit}
         />
 
         <ModalComp 
