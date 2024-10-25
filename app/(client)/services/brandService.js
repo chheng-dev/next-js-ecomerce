@@ -72,7 +72,6 @@ export class BrandService {
   //   }
   // }
   static async deleteBrandById(brandId, iconUrl) {
-    console.log(iconUrl);
     try {
       await fetch(`${API_URL_BASE}/api/brands/${brandId}`, {
         method: 'DELETE',

@@ -13,14 +13,6 @@ export async function GET(request, { params }) {
     }
 
     const brand = await getBrandById(id);
-
-    if (!brand) {
-      return NextResponse.json(
-        { message: 'Brand not found' },
-        { status: 404 }
-      )
-    }
-
     return NextResponse.json(brand);
   } catch (error) {
     console.error(error);
