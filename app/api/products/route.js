@@ -19,13 +19,13 @@ export async function GET() {
 export async function POST(request) {
   try {
     const { name, slug,
-      description, ori_price, price,
-      stock_quantity, colors, sizes, brand_id, category_id,
+      description,
+      stock_quantity, price_data, colors, sizes, brand_id, category_id,
       discount, discount_type, image_urls
     } = await request.json();
 
     const result = await createProduct(name, slug,
-      description, ori_price, price, stock_quantity, colors, sizes, brand_id, category_id,
+      description, stock_quantity, price_data, colors, sizes, brand_id, category_id,
       discount, discount_type, image_urls
     );
 

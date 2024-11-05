@@ -17,8 +17,6 @@ const ProductModal = ({
   isEditMode,
   prodName,
   description,
-  oriPrice,
-  price,
   stock,
   selectedColors,
   selectedCategoryId,
@@ -31,6 +29,7 @@ const ProductModal = ({
   onProdNameChange,
   size,
   discount,
+  priceData,
   selectedDiscountType,
   selectedSizes,
   placement,
@@ -49,8 +48,8 @@ const ProductModal = ({
   onSelectedDiscountType,
   onChangeBrand,
   onChangePrice,
-  onChangeOriCurrency,
   onChangeCurrency,
+  onChangeOriCurrency,
   onUploadImageUrls,
   onSubmit
 }) => {
@@ -128,34 +127,38 @@ const ProductModal = ({
                   {/* Pricing and stock  */}
                   <div className='bg-secondary p-4 rounded-md my-3'>
                     <h5 className='pb-6 font-semibold'>Pricing And Stock</h5>
-                    <div className='flex items-center justify-between gap-4'>
-                      <div className='w-1/3'>
+
+                    {/* Product Prices  */}
+                    <div className="flex items-center justify-between gap-4">
+                      {/* Original Price Input */}
+                      <div className="w-1/2">
                         <Input
                           label="Original Price"
                           placeholder="0.00"
                           labelPlacement="outside"
-                          value={oriPrice}
-                          onChange={onChangeOriPrice}
+                          value={priceData.oriPrice}
+                          onChange={(e) => onChangeOriPrice('oriPrice', e.target.value)} // Update the value directly
                           isRequired
-                          validationState={isInvalidOriPrice ? 'invalid' : 'valid'}
-                          errorMessage={isInvalidOriPrice ? 'Original price is required' : ''}
+                          validationState={priceData.isInvalidOriPrice ? 'invalid' : 'valid'}
+                          errorMessage={priceData.isInvalidOriPrice ? 'Original price is required' : ''}
                           startContent={
                             <div className="pointer-events-none flex items-center">
                               <span className="text-default-400 text-small">
-                                {selectedOriCurrency === 'usd' ? '$' : "៛"}
+                                {priceData.oriCurrency === 'usd' ? '$' : '៛'}
                               </span>
                             </div>
                           }
                           endContent={
                             <div className="flex items-center">
-                              <label className="sr-only" htmlFor="currency">
-                                Currency
+                              <label className="sr-only" htmlFor="currency-ori">
+                                Original Currency
                               </label>
                               <select
                                 className="outline-none border-0 bg-transparent text-default-400 text-small"
-                                id="currency"
-                                name="currency"
-                                onChange={onChangeOriCurrency}
+                                id="currency-ori"
+                                name="oriCurrency"
+                                value={priceData.oriCurrency}
+                                onChange={(e) => onChangeOriCurrency(e.target.value)}
                               >
                                 <option value="usd">USD</option>
                                 <option value="riel">RIEL</option>
@@ -166,33 +169,35 @@ const ProductModal = ({
                         />
                       </div>
 
-                      <div className='w-1/3'>
+                      {/* Price Input */}
+                      <div className="w-1/2">
                         <Input
                           label="Price"
                           placeholder="0.00"
                           labelPlacement="outside"
-                          value={price}
-                          onChange={onChangePrice}
+                          value={priceData.price}
+                          onChange={(e) => onChangePrice("price", e.target.value)}
                           isRequired
-                          validationState={isInValidPrice ? 'invalid' : 'valid'}
-                          errorMessage={isInValidPrice ? 'Price is required' : ''}
+                          validationState={priceData.isInValidPrice ? 'invalid' : 'valid'}
+                          errorMessage={priceData.isInValidPrice ? 'Price is required' : ''}
                           startContent={
                             <div className="pointer-events-none flex items-center">
                               <span className="text-default-400 text-small">
-                                {selectedCurrency === 'usd' ? '$' : "៛"}
+                                {priceData.currency === 'usd' ? '$' : '៛'}
                               </span>
                             </div>
                           }
                           endContent={
                             <div className="flex items-center">
-                              <label className="sr-only" htmlFor="currency">
+                              <label className="sr-only" htmlFor="currency-price">
                                 Currency
                               </label>
                               <select
                                 className="outline-none border-0 bg-transparent text-default-400 text-small"
-                                id="currency"
+                                id="currency-price"
                                 name="currency"
-                                onChange={onChangeCurrency}
+                                value={priceData.currency}
+                                onChange={(e) => onChangeCurrency(e.target.value)}
                               >
                                 <option value="usd">USD</option>
                                 <option value="riel">RIEL</option>
@@ -202,7 +207,10 @@ const ProductModal = ({
                           type="number"
                         />
                       </div>
+                    </div>
 
+
+                    <div className='flex items-center justify-between gap-4 my-4'>
                       <div className='w-1/3'>
                         <Input
                           type="number"
@@ -218,10 +226,8 @@ const ProductModal = ({
                           onChange={onChangeStockQuantity}
                         />
                       </div>
-                    </div>
 
-                    <div className='flex items-center justify-between gap-4 my-4'>
-                      <div className='w-1/2'>
+                      <div className='w-1/3'>
                         <Input
                           type="number"
                           label="Discount"
@@ -236,7 +242,7 @@ const ProductModal = ({
                           onChange={onChangeDiscount}
                         />
                       </div>
-                      <div className='w-1/2'>
+                      <div className='w-1/3'>
                         <DiscountTypeComp
                           items={discountTypes}
                           selectedDiscountType={selectedDiscountType}
@@ -246,6 +252,7 @@ const ProductModal = ({
 
 
                     </div>
+
                   </div>
                 </div>
                 <div className='w-2/6'>

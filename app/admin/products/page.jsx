@@ -47,7 +47,14 @@ class ProductPage extends Component{
       page: 1,
       rowsPerPage: 10,
       isDeleteModalOpen: false,
-      productById: {},
+      priceData: {
+        oriCurrency: 'usd',
+        currency: 'usd',
+        oriPrice: null,
+        price: null,
+        isInValidPrice: false,
+        isInvalidOriPrice: false,
+      }
     }
 
     this.handleOpenChange = this.handleOpenChange.bind(this);
@@ -59,10 +66,9 @@ class ProductPage extends Component{
     this.handleChangeBrand = this.handleChangeBrand.bind(this);
     this.handleChangeColors = this.handleChangeColors.bind(this);
     this.handleChangePrice = this.handleChangePrice.bind(this);
-    this.handleChangePrice = this.handleChangePrice.bind(this);
     this.handleChangeOriPrice = this.handleChangeOriPrice.bind(this);
-    this.handleChangeCurrency = this.handleChangeCurrency.bind(this);
-    this.handleChangeOriCurrency = this.handleChangeOriCurrency.bind(this);
+    this.handleCurrencyChange = this.handleCurrencyChange.bind(this);
+    this.handleOriCurrencyChange = this.handleOriCurrencyChange.bind(this);
     this.handleStockQuantity = this.handleStockQuantity.bind(this);
     this.handleDiscount = this.handleDiscount.bind(this);
     this.handleSelectedDiscountType = this.handleSelectedDiscountType.bind(this);
@@ -98,10 +104,16 @@ class ProductPage extends Component{
         isInValidCategory: true,
         isInvalidBrand: true,
         isInValidSize: true,
-        isInvalidOriPrice: true,
-        isInValidPrice: true,
         isInValidStock: true,
         imageUrls: null,
+        priceData: {
+          isInvalidOriPrice: true,
+          isInValidPrice: true,
+          oriCurrency: 'usd',
+          currency: 'usd',
+          oriPrice: '',
+          price: '',
+        }
       });  
     } else{
       this.setState({
@@ -255,70 +267,78 @@ class ProductPage extends Component{
     }
   } 
 
-  handleChangeOriPrice(e) {
-    const value = e.target.value;
-    const parsedValue = parseFloat(value);
-  
-    if (value.trim() === '' || isNaN(parsedValue) || parsedValue <= 0) {
-      this.setState({
-        oriPrice: '',
-      });
-    } else {
-      this.setState({
-        oriPrice: parsedValue, 
-        isInvalidOriPrice: false 
-      });
-    }
+  handleChangeOriPrice(key, value) {
+    this.setState((prevState) => ({
+      priceData: {
+        ...prevState.priceData,
+        [key]: value,
+        isInvalidOriPrice: !value
+      }
+    }));
   }
 
-  handleChangeOriCurrency(e){
-    const currency = e.target.value;
-    const { selectedOriCurrency, oriPrice } = this.state;
-    
-    if(!currency){
-      this.setState({ selectedOriCurrency: null });
-    } else{
-      this.setState({ selectedOriCurrency: currency });
-    }
-
-    if (selectedOriCurrency === 'riel') {
-      this.setState({ oriPrice:  (oriPrice / 4000).toFixed(2)});
-    } else if (selectedOriCurrency == "usd") {
-      this.setState({ oriPrice:  (oriPrice * 4000).toFixed(2)});
-    }
-  }
-  
-  handleChangePrice(e) {
-    const value = e.target.value;
-    const parsedValue = parseFloat(value);
-  
-    if (value.trim() === '' || isNaN(parsedValue) || parsedValue <= 0) {
-      this.setState({
-        price: '',
-      });
-    } else {
-      this.setState({
-        price: parsedValue, 
-        isInValidPrice: false 
-      });
-    }
+  handleChangePrice(key, value) {
+    this.setState((prevState) => ({
+      priceData: {
+        ...prevState.priceData,
+        [key]: value,
+        isInValidPrice: !value
+      }
+    }));
   }
 
-  handleChangeCurrency(e){
-    const currency = e.target.value;
-    const { selectedCurrency, price } = this.state;
-    
-    if(!currency){
-      this.setState({ selectedCurrency: null });
-    } else{
-      this.setState({ selectedCurrency: currency });
-    }
+  handleOriCurrencyChange(value) {
+    this.setState(
+      (prevState) => ({
+        priceData: {
+          ...prevState.priceData,
+          oriCurrency: value
+        }
+      }),
+      () => this.convertOriPrices(value)
+    );
+  }
 
-    if (selectedCurrency === 'riel') {
-      this.setState({ price:  (price / 4000).toFixed(2)});
-    } else if (selectedCurrency == "usd") {
-      this.setState({ price:  (price * 4000).toFixed(2)});
-    }
+  handleCurrencyChange(value) {
+    this.setState(
+      (prevState) => ({
+        priceData: {
+          ...prevState.priceData,
+          currency: value
+        }
+      }),
+      () => this.convertPrices(value)
+    );
+  }
+
+  convertOriPrices(oriCurrency) {
+    this.setState((prevState) => {
+      const oriPrice = parseFloat(prevState.priceData.oriPrice) || 0;
+      const updatedPriceData = { ...prevState.priceData };
+
+      if (oriCurrency === 'usd') {
+        updatedPriceData.oriPrice = (oriPrice / 4000).toFixed(2);
+      } else if (oriCurrency === 'riel') {
+        updatedPriceData.oriPrice = (oriPrice * 4000).toFixed(2);
+      }
+
+      return { priceData: updatedPriceData };
+    });
+  }
+
+  convertPrices(currency) {
+    this.setState((prevState) => {
+      const price = parseFloat(prevState.priceData.price) || 0;
+      const updatedPriceData = { ...prevState.priceData };
+
+      if (currency === 'usd') {
+        updatedPriceData.price = (price / 4000).toFixed(2);
+      } else if (currency === 'riel') {
+        updatedPriceData.price = (price * 4000).toFixed(2);
+      }
+
+      return { priceData: updatedPriceData };
+    });
   }
 
   handleStockQuantity(e){
@@ -378,11 +398,17 @@ class ProductPage extends Component{
       productToEdit: null,
       isInValidCategory: false,
       isInvalidBrand: false,
-      isInvalidOriPrice: false,
-      isInValidPrice: false,
       isInValidSize: false,
       isInValidColor: false,
       isInValidStock: false,
+      priceData: {
+        isInvalidOriPrice: false,
+        isInValidPrice: false,
+        oriCurrency: 'usd',
+        currency: 'usd',
+        oriPrice: '',
+        price: '',
+      }
     });
   }
   
@@ -404,15 +430,16 @@ class ProductPage extends Component{
       selectedCategoryId,
       selectedBrandId,
       selectedSizes,
-      oriPrice,
       selectedColors,
-      price,
       stock,
       discount,
       selectedDiscountType,
-      imageUrls
+      imageUrls,
+      priceData
     } = this.state;
-  
+
+    const { oriPrice, price, currency, oriCurrency } = priceData;
+      
     // Validation checks
     const isValid =
       prodName.trim() &&
@@ -432,13 +459,19 @@ class ProductPage extends Component{
         isInValidCategory: !selectedCategoryId,
         isInvalidBrand: !selectedBrandId,
         isInValidSize: !(Array.isArray(selectedSizes) && selectedSizes.length > 0),
-        isInvalidOriPrice: !oriPrice,
-        isInValidPrice: !price,
+        priceData: {
+          isInvalidOriPrice: !oriPrice,
+          isInValidPrice: !price,
+          oriCurrency: oriCurrency,
+          currency: currency
+        },
         isInValidColor: !(Array.isArray(selectedColors) && selectedColors.length > 0),
         isInValidStock: !stock,
       });
       return;
     }
+
+    console.log("priceData", priceData)
   
     const slug = slugify(prodName);
   
@@ -466,8 +499,6 @@ class ProductPage extends Component{
           selectedBrandId,
           selectedSizes,
           selectedColors,
-          price,
-          oriPrice,
           stock,
           discount,
           selectedDiscountType,
@@ -481,8 +512,7 @@ class ProductPage extends Component{
           selectedBrandId,
           selectedSizes,
           selectedColors,
-          price,
-          oriPrice,
+          priceData,
           stock,
           discount,
           selectedDiscountType,
@@ -522,15 +552,13 @@ class ProductPage extends Component{
   render(){
     const {
       products,
-      productById,
+      priceData,
       isModalOpen,
       isProdNameValid,
       isInValidCategory,
       isInvalidBrand,
       isInValidSize,
-      isInvalidOriPrice,
       isInValidColor,
-      isInValidPrice,
       isInValidStock,
       prodName,
       description,
@@ -547,7 +575,7 @@ class ProductPage extends Component{
       selectedCategoryId,
       page,
       rowsPerPage,
-      isDeleteModalOpen
+      isDeleteModalOpen,
     } = this.state;
 
     const columns = [
@@ -569,6 +597,9 @@ class ProductPage extends Component{
     const start = (page - 1) * rowsPerPage;
     const end   = start + rowsPerPage;
     const items = products.slice(start, end);
+
+    const {isInvalidOriPrice, isInValidPrice} = priceData;
+
     return(
       <div>
         <div className="flex items-center justify-between">
@@ -583,7 +614,6 @@ class ProductPage extends Component{
             aria-label="Products Table" 
             // selectionMode="multiple" 
             shadow="none"
-            isStriped
             bottomContent={
               <div className="flex w-full justify-center">
                 {
@@ -628,11 +658,11 @@ class ProductPage extends Component{
                         }
 
                         if(columnKey === 'ori_price') {
-                          return <TableCell>{Currency.formatToDollar(product.ori_price)}</TableCell>;
+                          // return <TableCell>{Currency.formatToDollar(product.ori_price)}</TableCell>;
                         }
 
                         if(columnKey === 'price') {
-                          return <TableCell>{Currency.formatToDollar(product.price)}</TableCell>;
+                          // return <TableCell>{Currency.formatToDollar(product.price)}</TableCell>;
                         }
 
                         if(columnKey === 'stock_quantity') {
@@ -718,7 +748,6 @@ class ProductPage extends Component{
           isInValidPrice={isInValidPrice}
           isInValidStock={isInValidStock}
           prodName={prodName}
-          productById={productById}
           selectedColors={selectedColors}
           selectedBrandId={selectedBrandId}
           selectedCategoryId={selectedCategoryId}
@@ -727,6 +756,7 @@ class ProductPage extends Component{
           price={price}
           stock={stock}
           discount={discount}
+          priceData={priceData}
           selectedDiscountType={selectedDiscountType}
           selectedSizes={selectedSizes}
           selectedOriCurrency={selectedOriCurrency}
@@ -737,8 +767,8 @@ class ProductPage extends Component{
           onChangeColor={this.handleChangeColors}
           onChangeOriPrice={this.handleChangeOriPrice}
           onChangePrice={this.handleChangePrice}
-          onChangeOriCurrency={this.handleChangeOriCurrency}
-          onChangeCurrency={this.handleChangeCurrency}
+          onChangeCurrency={this.handleCurrencyChange}
+          onChangeOriCurrency={this.handleOriCurrencyChange}
           onChangeStockQuantity={this.handleStockQuantity}
           onChangeDiscount={this.handleDiscount}
           onSelectedDiscountType={this.handleSelectedDiscountType}

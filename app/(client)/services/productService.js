@@ -19,26 +19,27 @@ export class ProductService {
 
   static async createProduct(prodName, slug,
     description, selectedCategoryId, selectedBrandId,
-    selectedSizes, selectedColors, price, oriPrice, stock,
+    selectedSizes, selectedColors, priceData, stock,
     discount, selectedDiscountType, imageUrls
   ) {
     try {
-      const response = await axios.post(`${API_URL_BASE}/api/products`, {
+      const productData = {
         name: prodName,
         slug,
         description,
-        price,
         stock_quantity: stock,
-        ori_price: oriPrice,
         colors: selectedColors,
         sizes: selectedSizes,
         stock: stock,
+        price_data: priceData,
         brand_id: selectedBrandId,
         category_id: selectedCategoryId,
         discount,
         discount_type: selectedDiscountType,
         image_urls: imageUrls
-      });
+      }
+
+      const response = await axios.post(`${API_URL_BASE}/api/products`, productData);
 
       return { ok: true, data: response.data };
     } catch (error) {
