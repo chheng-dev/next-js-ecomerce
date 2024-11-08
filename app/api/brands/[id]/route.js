@@ -63,17 +63,13 @@ export async function DELETE(request) {
   try {
     const body = await request.json();
     console.log(body)
-    if (!body || !body.brandId || !body.iconUrl) {
-      return NextResponse.json({ message: 'Missing brandId or iconUrl in the request' }, { status: 400 });
+    if (!body || !body.brandId) {
+      return NextResponse.json({ message: 'Missing brandId in the request' }, { status: 400 });
     }
 
     const { brandId, iconUrl } = body;
 
-    console.log('Deleting brand with ID:', brandId);
-
     const deleteResult = await deleteBrandById(brandId)
-
-    console.log('Delete result:', deleteResult.rows);
 
     if (!deleteResult.rowCount) {
       return NextResponse.json({ message: 'Brand not found' }, { status: 404 });

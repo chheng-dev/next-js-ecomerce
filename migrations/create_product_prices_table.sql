@@ -8,3 +8,5 @@ CREATE TABLE if NOT EXISTS product_prices (
   updated_at TIMESTAMP DEFAULT NOW()
 );
 
+-- Create a unique index on product_id to resolve conflicts
+CREATE UNIQUE INDEX unique_product_id_idx ON product_prices (product_id);

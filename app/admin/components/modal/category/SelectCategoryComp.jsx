@@ -1,69 +1,81 @@
 import { CategoryService } from '@/app/(client)/services/categoryService';
-import { Select, SelectItem } from '@nextui-org/react';
-import React, { Component } from 'react';
+import { generateSlug } from '@/lib/slugHelper';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import Select from 'react-select';
 
-class SelectCategoryComp extends Component {
-  constructor(props) {
-    super(props);
+const SelectCategoryComp = ({ selectedValueCategory, onSelectionChangeCategory, isInValidCategory }) => {
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(selectedValueCategory || '');
 
-    this.state = {
-      categories: [],
-    };
-
-    this.onSelectionChangeCategory = this.props.onSelectionChangeCategory.bind(this)
-  }
-
-  componentDidMount() {
-    this.getCategories();
-  }
-
-  async getCategories() {
-    try {
-      const response = await CategoryService.fetchCategories();
-      if (response.ok) {
-        const result = response.data;
-
-        const categoriesOption = result.map(item => ({
-          key: item.id,
-          value: item.title,
-        }));
-
-        this.setState({ categories: categoriesOption });
-      } else {
-        toast.error(`Failed to fetch categories:)`);
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const response = await CategoryService.fetchCategories();
+        if (response.ok) {
+          const result = response.data;
+          const categoriesOption = result.map(item => ({
+            id: item.id,
+            value: generateSlug(item.title),  
+            label: item.title,
+          }));
+          setCategories(categoriesOption);
+        } else {
+          toast.error(`Failed to fetch categories.`);
+        }
+      } catch (error) {
+        toast.error('An error occurred while fetching categories');
+        console.error('Error details:', error);
       }
-    } catch (error) {
-      toast.error('An error occurred while fetching categories');
-      console.error('Error details:', error);
+    };
+    getCategories();
+  }, []);
+
+  useEffect(() => {
+    if (selectedValueCategory !== selectedCategory) {
+      setSelectedCategory(selectedValueCategory);
     }
-  }
+  }, [selectedValueCategory]);
 
-  render() {
-    const { categories } = this.state;
-    const { selectedValueCategory, isInValidCategory, onSelectionChangeCategory } = this.props;
+  const handleSelectionChange = (selectedOption) => {
+    const categoryId = selectedOption ? selectedOption.id : '';
+    setSelectedCategory(categoryId);
+    onSelectionChangeCategory(categoryId); 
+  };
 
-    return (
+  const selectedCategoryObj = categories.find(cat => cat.value === selectedCategory);
+
+  return (
+    <div className="w-full">
+      <label className="block text-sm font-medium text-gray-700 mb-2">
+        Category <span className='text-red-500'>*</span>
+      </label>
       <Select
-        isRequired
-        label="Category"
-        placeholder="Select a category"
-        className="w-full"
+        onChange={handleSelectionChange}
+        options={categories}
         isInvalid={isInValidCategory}
-        selectedKeys={selectedValueCategory ? [selectedValueCategory] : []}
-        value={selectedValueCategory} 
-        errorMessage="Please enter a valid category"
-        labelPlacement='outside'
-        onChange={onSelectionChangeCategory} 
-      >
-        {categories.map(category => (
-          <SelectItem key={category.key} textValue={category.value}>
-            {category.value}
-          </SelectItem>
-        ))}
-      </Select>
-    );
-  }
-}
+        placeholder="Select a category"
+        classNamePrefix="react-select text-xs"
+        theme={(theme) => ({
+          ...theme,
+          borderRadius: '10px',
+          colors: {
+            ...theme.colors,
+            primary: '#D4D4D8',
+          },
+        })}
+        styles={{
+          control: (baseStyles, state) => ({
+            ...baseStyles,
+            borderColor: state.isFocused ? 'grey' : '',
+            fontSize: '14px',
+          }),
+        }}
+        value={selectedCategoryObj}  // Ensure the selected category is correctly passed as an object
+      />
+      {isInValidCategory && <p className="text-red-500 text-xs mt-1">Please enter a valid category</p>}
+    </div>
+  );
+};
 
 export default SelectCategoryComp;

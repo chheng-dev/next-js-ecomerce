@@ -17,26 +17,26 @@ export class ProductService {
     }
   }
 
-  static async createProduct(prodName, slug,
+  static async createProduct(name, slug,
     description, selectedCategoryId, selectedBrandId,
-    selectedSizes, selectedColors, priceData, stock,
-    discount, selectedDiscountType, imageUrls
+    selectedSizes, selectedColroIds, priceData, stock,
+    discount, selectedDiscountType, uploadedImageUrls
   ) {
+
     try {
       const productData = {
-        name: prodName,
+        name,
         slug,
         description,
         stock_quantity: stock,
-        colors: selectedColors,
+        selectedColorIds: selectedColroIds,
         sizes: selectedSizes,
-        stock: stock,
         price_data: priceData,
         brand_id: selectedBrandId,
         category_id: selectedCategoryId,
         discount,
         discount_type: selectedDiscountType,
-        image_urls: imageUrls
+        image_urls: uploadedImageUrls
       }
 
       const response = await axios.post(`${API_URL_BASE}/api/products`, productData);
@@ -44,6 +44,36 @@ export class ProductService {
       return { ok: true, data: response.data };
     } catch (error) {
       console.error("Error creating product:", error);
+      return { ok: false, data: error.response ? error.response.data : 'Unknown error' };
+    }
+  }
+
+  static async updateProduct(id, name, slug,
+    description, selectedCategoryId, selectedBrandId,
+    selectedSizes, selectedColroIds, priceData, stock,
+    discount, selectedDiscountType, uploadedImageUrls) {
+
+    try {
+      const productData = {
+        name,
+        slug,
+        description,
+        stock_quantity: stock,
+        selectedColorIds: selectedColroIds,
+        sizes: selectedSizes,
+        price_data: priceData,
+        brand_id: selectedBrandId,
+        category_id: selectedCategoryId,
+        discount,
+        discount_type: selectedDiscountType,
+        image_urls: uploadedImageUrls
+      }
+
+      const response = await axios.put(`${API_URL_BASE}/api/products/${id}`, productData);
+
+      return { ok: true, data: response.data };
+    } catch (error) {
+      console.error("Error updating product:", error);
       return { ok: false, data: error.response ? error.response.data : 'Unknown error' };
     }
   }

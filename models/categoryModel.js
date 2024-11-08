@@ -62,7 +62,6 @@ export const updateCategory = async (id, title, color) => {
   }
 }
 
-
 export const deleteCategoryById = async (id) => {
   try {
     const result = await pool.query('DELETE FROM categories WHERE id = $1 RETURNING *', [id]);

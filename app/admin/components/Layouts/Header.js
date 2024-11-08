@@ -37,11 +37,12 @@ const Header = () => {
         <div className='w-4/6 text-end'>
           <div className='flex gap-x-5 items-center justify-end'>
             <Badge content="5" color="danger" size='sm' >
-              <Bell className='w-5 h-5 text-green-600' />
+              <Bell className='w-5 h-5 text-green-600 cursor-pointer' />
             </Badge>
             <Dropdown placement="bottom-start">
               <DropdownTrigger>
                 <User
+                  className='cursor-pointer'
                   name="English"
                   avatarProps={{
                     className: "w-6 h-4 rounded-none cusor-pointer",
@@ -62,6 +63,7 @@ const Header = () => {
               <DropdownTrigger>
                 <User
                   name="Jane Doe"
+                  className='cursor-pointer'
                   description="Product Designer"
                   avatarProps={{
                     className: "w-8 h-8 cursor-pointer",

@@ -157,7 +157,7 @@ function HeaderComp() {
   return (
     <nav className="bg-white border-gray-200 shadow-sm sticky top-0 z-10">
       <div className="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto py-4 lg:px-0 px-4">
-        <a href="https://flowbite.com" className="flex items-center space-x-3 rtl:space-x-reverse">
+        <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src="https://flowbite.com/docs/images/logo.svg" className="h-8" alt="Flowbite Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">BRAVA MAMA</span>
         </a>

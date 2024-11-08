@@ -1,6 +1,6 @@
 "use client";
 
-import { FolderKanban, Gauge, Heart, List, Box, Settings, LogOut, LayoutGridIcon } from "lucide-react";
+import { FolderKanban, Gauge, Heart, List, Box, Settings, LayoutGridIcon, ShoppingBasket } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -19,7 +19,7 @@ const Sidebar = () => {
     },
     {
       label: "Brands",
-      icon: LayoutGridIcon,
+      icon: ShoppingBasket,
       path: "/admin/brands",
     },
     {
