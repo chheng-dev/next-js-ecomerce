@@ -11,13 +11,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        // background: "var(--background)",
+        // foreground: "var(--foreground)",
         primary: {
           DEFAULT: '#121019'
         },
         secondary: {
-          DEFAULT: '#F6F7F6'
+          DEFAULT: '#F9F9F9'
         },
         gray: {
           400: '#F4F6FB'
@@ -35,7 +35,9 @@ module.exports = {
           light: {
             layout: {},
             colors: {
-              // primary: '#121019'
+              default: {
+                100: '#fff'
+              }
             }
           },
         }

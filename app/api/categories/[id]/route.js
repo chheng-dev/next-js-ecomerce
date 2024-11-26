@@ -10,7 +10,7 @@ export async function DELETE(request, { params }) {
     console.log(error);
     return NextResponse.json({
       error,
-      message: 'Failed to delete categoryr'
+      message: 'Failed to delete category'
     }, {
       status: 500
     });

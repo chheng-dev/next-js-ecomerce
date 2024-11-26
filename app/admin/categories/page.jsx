@@ -1,12 +1,12 @@
 "use client";
 
-import { Button, Input, Modal, Pagination } from '@nextui-org/react';
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Pagination } from '@nextui-org/react';
 import React, { Component } from 'react';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue } from '@nextui-org/react';
 import ModalComp from '../components/modal/ModalComp';
 import { toast } from 'react-toastify';
 import { CategoryService } from '@/app/(client)/services/categoryService';
-import { FileEdit, Trash2Icon } from 'lucide-react';
+import { EllipsisVertical } from 'lucide-react';
 import PropTypes from 'prop-types';
 import Humanize from '@/lib/humanize';
 import CategoryModal from '../components/modal/category/CategoryModal';
@@ -184,10 +184,7 @@ class Page extends Component {
       })
     }
   }
-
-
-
-
+  
   render() {
     const { 
       categoryName, 
@@ -222,7 +219,7 @@ class Page extends Component {
       <div>
         <div className="flex items-center justify-between">
           <h4>Categories List</h4>
-          <Button color="primary" size="sm" onClick={() => this.handleOpenChange(true)}>
+          <Button color="primary" size="sm" className='rounded-full' onClick={() => this.handleOpenChange(true)}>
             Add New Category
           </Button>
         </div>
@@ -283,29 +280,21 @@ class Page extends Component {
                             return <TableCell>{humanizedDate.ago()}</TableCell>;
                           }
   
-                          if(columnKey === 'action') {
-                            return(
-                              <TableCell className='space-x-2'>
-                                <Button 
-                                  isIconOnly 
-                                  color="warning" 
-                                  variant="faded"  
-                                  aria-label="edit" 
-                                  size='sm'
-                                  onClick={() => this.handleEditCategory(item)}
-                                >
-                                  <FileEdit className='w-4' />
-                                </Button>  
-                                <Button 
-                                  isIconOnly 
-                                  color="danger" 
-                                  variant="faded"  
-                                  aria-label="delete" 
-                                  size='sm'
-                                  onClick={() => this.handleDeleteClick(item.id)}
-                                >
-                                  <Trash2Icon className='w-4' />
-                                </Button>  
+                          if (columnKey === 'action') {
+                            return (
+                              <TableCell className="relative flex items-center gap-2 bg-background">
+                                <Dropdown>
+                                  <DropdownTrigger>
+                                    <Button isIconOnly radius="full" size="sm" variant="light">
+                                      <EllipsisVertical className="text-default-400" />
+                                    </Button>
+                                  </DropdownTrigger>
+                                  <DropdownMenu>
+                                    {/* <DropdownItem onClick={() => this.handleViewBrand(product)}>View</DropdownItem> */}
+                                    <DropdownItem onClick={() => this.handleEditCategory(item)}>Edit</DropdownItem>
+                                    <DropdownItem onClick={() => this.handleDeleteClick(item.id)}>Delete</DropdownItem>
+                                  </DropdownMenu>
+                                </Dropdown>
                               </TableCell>
                             );
                           }

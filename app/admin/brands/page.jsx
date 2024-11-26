@@ -1,12 +1,12 @@
 "use client"
 import React, { Component } from 'react'
 import BrandModal from '../components/modal/brand/BrandModal';
-import { Avatar, Button, getKeyValue, Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
+import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, getKeyValue, Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import { BrandService } from '@/app/(client)/services/brandService';
 import { toast } from 'react-toastify';
 import slugify from 'react-slugify';
 import Humanize from '@/lib/humanize';
-import { FileEdit, Trash2Icon } from 'lucide-react';
+import { EllipsisVertical } from 'lucide-react';
 import ModalComp from '../components/modal/ModalComp';
 
 class Page extends Component{
@@ -210,7 +210,7 @@ class Page extends Component{
       <div>
         <div className="flex items-center justify-between">
           <h4>Brands</h4>
-          <Button color="primary" size="sm" onClick={() => this.handleOpenChange(true)}>
+          <Button color="primary" size="sm" className='rounded-full' onClick={() => this.handleOpenChange(true)}>
             Add New Brand
           </Button>
         </div>
@@ -221,7 +221,6 @@ class Page extends Component{
               aria-label="Selection behavior table example with dynamic content" 
               selectionMode="multiple" 
               shadow="none"
-              isStriped
               bottomContent={
                 <div className="flex w-full justify-center">
                   {
@@ -270,30 +269,22 @@ class Page extends Component{
                             const humanizedDate = new Humanize(brand.updated_at);
                             return <TableCell>{humanizedDate.ago()}</TableCell>;
                           }
-  
-                          if(columnKey === 'action') {
-                            return(
-                              <TableCell className='space-x-2'>
-                                <Button 
-                                  isIconOnly 
-                                  color="warning" 
-                                  variant="faded"  
-                                  aria-label="edit" 
-                                  size='sm'
-                                  onClick={() => this.handleEditBrand(brand)}
-                                >
-                                  <FileEdit className='w-4' />
-                                </Button>  
-                                <Button 
-                                  isIconOnly 
-                                  color="danger" 
-                                  variant="faded"  
-                                  aria-label="delete" 
-                                  size='sm'
-                                  onClick={() => this.handleDeleteClick(brand)}
-                                >
-                                  <Trash2Icon className='w-4' />
-                                </Button>  
+
+                          if (columnKey === 'action') {
+                            return (
+                              <TableCell className="relative flex items-center gap-2 bg-background">
+                                <Dropdown>
+                                  <DropdownTrigger>
+                                    <Button isIconOnly radius="full" size="sm" variant="light">
+                                      <EllipsisVertical className="text-default-400" />
+                                    </Button>
+                                  </DropdownTrigger>
+                                  <DropdownMenu>
+                                    {/* <DropdownItem onClick={() => this.handleViewBrand(product)}>View</DropdownItem> */}
+                                    <DropdownItem onClick={() => this.handleEditBrand(brand)}>Edit</DropdownItem>
+                                    <DropdownItem onClick={() => this.handleDeleteClick(brand)}>Delete</DropdownItem>
+                                  </DropdownMenu>
+                                </Dropdown>
                               </TableCell>
                             );
                           }

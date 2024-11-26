@@ -1,6 +1,6 @@
 "use client";
 
-import { FolderKanban, Gauge, Heart, List, Box, Settings, LogOut, LayoutGridIcon } from "lucide-react";
+import { FolderKanban, Gauge, Heart, List, Box, Settings, LayoutGridIcon, ShoppingBasket } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -19,7 +19,7 @@ const Sidebar = () => {
     },
     {
       label: "Brands",
-      icon: LayoutGridIcon,
+      icon: ShoppingBasket,
       path: "/admin/brands",
     },
     {
@@ -59,8 +59,8 @@ const Sidebar = () => {
         const isActive = pathname === item.path;
 
         return (
-          <Link href={item.path} key={idx} className={`flex gap-x-2 items-center rounded-md py-2 px-4 mb-2
-            ${isActive ? "bg-[#4881FF]" : "text-primary"}
+          <Link href={item.path} key={idx} className={`flex gap-x-2 items-center rounded-lg py-2 px-4 mb-2
+            ${isActive ? "bg-primary" : "text-primary"}
           `}>
             <Icon className="w-5 h-5" />
             <span className="text-sm">{item.label}</span>
