@@ -1,4 +1,4 @@
-import { createCategory, getCategories } from "@/models/categoryModel";
+import { createCategory, getCategories, getTopCategory } from "@/models/categoryModel";
 import { NextResponse } from "next/server";
 
 export async function GET() {

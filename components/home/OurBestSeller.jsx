@@ -42,7 +42,7 @@ const OurBestSeller = () => {
   return (
     <div className='my-16 lg:px-0 px-4'>
       <div className='w-full text-center my-5'>
-        <h4>Our Bestseller</h4>
+        <h2>Our Bestseller</h2>
       </div>
 
       <div className='grid lg:grid-cols-5 gap-5 md:grid-cols-4 sm:grid-cols-2 grid-cols-1'>

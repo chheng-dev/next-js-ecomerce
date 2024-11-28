@@ -1,6 +1,8 @@
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ClientLayout from '@/components/layouts/ClientLayout';
+import "../../styles/client/main.scss";
+
 
 export const metadata = {
   title: "Brava Mama",

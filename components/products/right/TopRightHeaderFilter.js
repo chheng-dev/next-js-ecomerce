@@ -1,11 +1,10 @@
 "use client"
 import { Accordion, AccordionItem } from '@nextui-org/react';
-import { ActivityIcon, CalendarPlus2, ChevronDown, FileHeartIcon, LayoutGridIcon, Percent, SlidersIcon, TrendingDown, TrendingUp } from 'lucide-react'
+import { ActivityIcon, CalendarPlus2, LayoutGridIcon, Percent, SlidersIcon, TrendingDown, TrendingUp } from 'lucide-react'
 import Link from 'next/link';
 import React, { useState } from 'react'
 
-export const TopRightHeaderFilter = () => {
-  const [isOpen, setIsOpen] = useState(false);
+export const TopRightHeaderFilter = ({ items }) => {
 
   const sortByContent = [
     {
@@ -54,7 +53,7 @@ export const TopRightHeaderFilter = () => {
       <div className='flex gap-3 w-4/5'>
         <LayoutGridIcon className='w-5 h-5' />
         <SlidersIcon className='w-5 h-5' />
-        <span className='text-sm'>Showing 1-16 of 72 results</span>
+        <span className='text-sm'>Showing of {items.length} results</span>
       </div>
       <div className='w-1/5 flex justify-end'>
         <Accordion

@@ -8,7 +8,7 @@ function BannerComp() {
       <div className='relative'>
         <img
           className='w-full lg:h-auto object-cover h-96'
-          src='https://scontent.fpnh19-1.fna.fbcdn.net/v/t39.30808-6/350937107_802074954520427_3916137285799211522_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeENo03HNiSTBquMuHLXtEa8FsuWo4BZjUMWy5ajgFmNQx1XHXZDv2Xd5HMJYhC1cjD2PVXt3UHpJA5Ina1v4Ztw&_nc_ohc=nFZvSXPbvDkQ7kNvgGGZ_BV&_nc_ht=scontent.fpnh19-1.fna&_nc_gid=AInJsMl-66PNzE_ZjjpKYo3&oh=00_AYDuc_N_cPwhSljirab3bg-IVWTaeiLh3aOzymwSNw2zfg&oe=670AE739'
+          src='https://scontent.fpnh19-1.fna.fbcdn.net/v/t39.30808-6/350937107_802074954520427_3916137285799211522_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeENo03HNiSTBquMuHLXtEa8FsuWo4BZjUMWy5ajgFmNQx1XHXZDv2Xd5HMJYhC1cjD2PVXt3UHpJA5Ina1v4Ztw&_nc_ohc=TmdDWWQsJ1oQ7kNvgGpnv7U&_nc_zt=23&_nc_ht=scontent.fpnh19-1.fna&_nc_gid=AdRq_nVQRuCHZ8mRz5vVkBJ&oh=00_AYAB7fR33zYF_6SmTqFUbb4rkFnhfL61--tdTQIgLhOidA&oe=674B1039'
           alt='background'
         />
       </div>

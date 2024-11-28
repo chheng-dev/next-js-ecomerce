@@ -1,9 +1,10 @@
-"use client"
+"use client";
 import Slider from "react-slick";
 import React from "react";
 import CartItemCategory from "./CartItemCategory";
+import { Skeleton } from '@nextui-org/react'; // Add Skeleton import
 
-const CarouselCategoryComp = React.forwardRef(({ items }, ref) => {
+const CarouselCategoryComp = React.forwardRef(({ items, loading }, ref) => {
 
   const settings = {
     dots: false,
@@ -41,14 +42,20 @@ const CarouselCategoryComp = React.forwardRef(({ items }, ref) => {
   return (
     <div className="relative">
       <Slider ref={ref} {...settings}>
-        {items.map((item, index) => (
-          <div key={index} className="p-2">
-            <CartItemCategory
-              title={item.title}
-              image={item.image}
-            />
-          </div>
-        ))}
+        {loading
+          ? Array(5).fill(0).map((_, index) => (
+            <div key={index} className="p-2">
+              <Skeleton height={200} width="100%" />
+            </div>
+          ))
+          : items.map((item, index) => (
+            <div key={index} className="p-2">
+              <CartItemCategory
+                title={item.name}
+                image={item.icon_url}
+              />
+            </div>
+          ))}
       </Slider>
     </div>
   );

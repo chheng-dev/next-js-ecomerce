@@ -2,9 +2,9 @@ import axios from "axios";
 const API_URL_BASE = process.env.NEXT_PUBLIC_BASE_API_URL;
 
 export class ProductService {
-  static async fetchProductsList() {
+  static async fetchProductsList(page, limit) {
     try {
-      const res = await axios.get(`${API_URL_BASE}/api/products`, {
+      const res = await axios.get(`${API_URL_BASE}/api/products?page=${page}&limit=${limit}`, {
         method: 'GET',
         headers: {
           "Content-Type": 'application/json'

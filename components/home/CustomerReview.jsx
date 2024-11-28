@@ -54,7 +54,7 @@ function CustomerReview() {
     <div className='bg-secondary mt-16 px-4 lg:px-0'>
       <div className='header-section container mx-auto py-8'>
         <div className='flex items-center justify-between lg:mb-4 mb-2'>
-          <h4 className='mb-2'>What our Customer say's</h4>
+          <h2 className='mb-2'>What our Customer say's</h2>
           <div className='flex gap-2'>
             <span 
               className='bg-primary rounded-md p-1.5'

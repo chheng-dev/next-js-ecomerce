@@ -1,137 +1,102 @@
 "use client"
-import React from 'react'
+import React, { Component } from 'react'
+import { ProductService } from '@/app/(client)/services/productService'
 import CartItem from '../CartItem'
 import { TopRightHeaderFilter } from './right/TopRightHeaderFilter'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
-export default function RightSidebar() {
+class RightSidebar extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      productItems: [],
+      hasMore: true,
+      loading: false,
+      page: 1,
+    }
+  }
 
-  const productItems = [
-    {
-      "id": 1,
-      "key": "1",
-      "slug": "slug-1",
-      "image": "https://via.placeholder.com/150",
-      "title": "White Line Baby",
-      "price": 10,
-      "brand": "Chang",
-      "originalPrice": 20.00
-    },
-    {
-      "id": 2,
-      "key": "2",
-      "slug": "baby-cloth",
-      "image": "https://via.placeholder.com/150",
-      "title": "Baby Cloth",
-      "price": 10,
-      "brand": "Chang",
-      "originalPrice": 20.00
-    },
-    {
-      "id": 3,
-      "key": "3",
-      "slug": "blue-baby-shoes",
-      "image": "https://via.placeholder.com/150",
-      "title": "Blue Baby Shoes",
-      "price": 15,
-      "brand": "Nike",
-      "originalPrice": 30.00
-    },
-    {
-      "id": 4,
-      "key": "4",
-      "slug": "cute-baby-hat",
-      "image": "https://via.placeholder.com/150",
-      "title": "Cute Baby Hat",
-      "price": 8,
-      "brand": "Adidas",
-      "originalPrice": 18.00
-    },
-    {
-      "id": 5,
-      "key": "5",
-      "slug": "soft-baby-blanket",
-      "image": "https://via.placeholder.com/150",
-      "title": "Soft Baby Blanket",
-      "price": 20,
-      "brand": "Pampers",
-      "originalPrice": 40.00
-    },
-    {
-      "id": 6,
-      "key": "6",
-      "slug": "baby-diaper-bag",
-      "image": "https://via.placeholder.com/150",
-      "title": "Baby Diaper Bag",
-      "price": 25,
-      "brand": "Chicco",
-      "originalPrice": 50.00
-    },
-    {
-      "id": 7,
-      "key": "7",
-      "slug": "baby-carrier",
-      "image": "https://via.placeholder.com/150",
-      "title": "Baby Carrier",
-      "price": 30,
-      "brand": "BabyBjörn",
-      "originalPrice": 60.00
-    },
-    {
-      "id": 8,
-      "key": "8",
-      "slug": "infant-car-seat",
-      "image": "https://via.placeholder.com/150",
-      "title": "Infant Car Seat",
-      "price": 100,
-      "brand": "Graco",
-      "originalPrice": 200.00
-    },
-    {
-      "id": 9,
-      "key": "9",
-      "slug": "baby-play-gym",
-      "image": "https://via.placeholder.com/150",
-      "title": "Baby Play Gym",
-      "price": 45,
-      "brand": "Fisher-Price",
-      "originalPrice": 90.00
-    },
-    {
-      "id": 10,
-      "key": "10",
-      "slug": "pacifier-clips",
-      "image": "https://via.placeholder.com/150",
-      "title": "Pacifier Clips",
-      "price": 5,
-      "brand": "Binky",
-      "originalPrice": 10.00
-    },
-  ];
+  componentDidMount() {
+    this.fetchProductList()
+  }
 
-  return (
-    <div>
-      <TopRightHeaderFilter />
-      <div className='grid grid-cols-4 gap-3 my-4'>
-        {
-          productItems.map((item, idx) => {
-            return (
+  filteredProductImage(product) {
+    if (!product || !product.images) return null;
+    const mainImage = product.images.find((item) => item.is_main_image);
+    return mainImage ? mainImage.image_url : null;
+  }
+
+  fetchProductList = async () => {
+    const { page, productItems } = this.state
+    const limit = 12;
+
+    this.setState({ loading: true })
+
+    try {
+      const response = await ProductService.fetchProductsList(page, limit);
+      const { products, total, hasMore } = response.data;
+
+      if (response.ok) {
+        this.setState({
+          productItems: [...productItems, ...products],
+          loading: false,
+          hasMore: hasMore,
+        })
+      } else {
+        console.error('Failed to fetch products');
+      }
+    } catch (error) {
+      console.error('Error fetching product list:', error)
+      this.setState({
+        loading: false,
+      })
+    }
+  };
+
+  fetchMoreData = async () => {
+    if (this.state.loading || !this.state.hasMore) return;
+    this.setState(
+      (prevState) => ({ page: prevState.page + 1, loading: true }),
+      this.fetchProductList
+    );
+  }
+
+  render() {
+    const { productItems, hasMore, loading } = this.state
+
+    if (loading && productItems.length === 0) {
+      return <div>Loading products...</div>
+    }
+
+    return (
+      <div className='w-full'>
+        <TopRightHeaderFilter items={productItems} />
+        <InfiniteScroll
+          dataLength={productItems.length}
+          next={this.fetchMoreData}
+          hasMore={hasMore}
+          loader={<h4 className='text-center'>Loading more...</h4>}
+          scrollThreshold={0.95}
+        >
+          <div className='grid grid-cols-4 gap-3 my-4'>
+            {productItems.map((item, index) => (
               <CartItem
-                key={idx}
-                slug={item.slug}
-                image={item.image}
-                title={item.title}
+                index={index}
+                key={item.id}
+                title={item.name}
+                image={this.filteredProductImage(item)}
                 price={item.price}
-                brand={item.brand}
-                originalPrice={item.originalPrice}
+                oriPrice={item.ori_price}
+                currency={item.currency}
+                oriCurrency={item.ori_currency}
+                brand={item.brand.label}
               />
-            )
-          })
-        }
-      </div>
-    </div>
-  )
+            ))}
+          </div>
+        </InfiniteScroll >
+      </div >
+    )
+  }
 }
 
-
-
-
+export default RightSidebar;

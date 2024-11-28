@@ -3,6 +3,7 @@ import Header from "./components/Layouts/Header";
 import Sidebar from "./components/Layouts/Sidebar";
 import 'react-toastify/dist/ReactToastify.css';
 import "@uploadthing/react/styles.css";
+import "../../styles/main.scss";
 
 
 export const metadata = {

@@ -9,7 +9,7 @@ function DealsMonth() {
       <div className='lg:flex items-center justify-between'>
         <div className='lg:w-1/2'>
           <div>
-            <h4>Deals of the Month</h4>
+            <h2>Deals of the Month</h2>
             <p className='text-xs my-1'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia nobis laborum ab cum ipsum magnam ratione, possimus omnis, deserunt ducimus vero nemo adipisci dolores fugit eos optio sint tempora eligendi.</p>
 
             <CountdownTimer targetDate="2024-12-31T00:00:00" />

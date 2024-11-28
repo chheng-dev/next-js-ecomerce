@@ -14,11 +14,11 @@ const CartCustomerReview = ({ rating, content, name, avatar }) => {
       </div>
       <p className='text-sm my-2 line-clamp-2'>{content}</p>
       
-      <div className='flex gap-2 mt-6'>
+      <div className='flex gap-2 mt-6'> 
         <Avatar src={avatar} />
         <div className="block">
           <p>{name}</p> 
-          <span className='text-xs text-gray-400'>Customer</span>
+          <span className='text-xs text-gray-500'>Customer</span>
         </div>
       </div>
     </div>

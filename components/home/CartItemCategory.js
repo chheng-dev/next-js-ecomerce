@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardFooter, Image, Button } from "@nextui-org/react";
+import { Card, CardFooter } from "@nextui-org/react";
 
 function CartItemCategory({ title, image }) {
   return (
