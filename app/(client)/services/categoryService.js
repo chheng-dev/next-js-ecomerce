@@ -70,4 +70,19 @@ export class CategoryService {
       return { ok: false, data: error.response ? error.response.data : 'Unknown error' };
     }
   }
+
+  static async getTopCategory() {
+    try {
+      const res = await axios.get(`${API_URL_BASE}/api/categories/top_categories`, {
+        method: 'GET',
+        headers: {
+          "Content-Type": 'application/json'
+        }
+      });
+      return { ok: true, data: res.data };
+    } catch (error) {
+      console.error("Error fetching categories list:", error);
+      throw error;
+    }
+  }
 }

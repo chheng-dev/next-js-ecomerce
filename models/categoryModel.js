@@ -9,6 +9,15 @@ export const getCategories = async () => {
   }
 }
 
+export const getTopCategory = async () => {
+  try {
+    const result = await pool.query('SELECT * FROM categories ORDER BY updated_at DESC LIMIT 4');
+    return result.rows;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export const createCategory = async (title, color) => {
   try {
     const result = await pool.query(
@@ -62,11 +71,28 @@ export const updateCategory = async (id, title, color) => {
   }
 }
 
+// export const deleteCategoryById = async (id) => {
+//   try {
+//     const result = await pool.query('DELETE FROM categories WHERE id = $1 RETURNING *', [id]);
+//     return result.rows;
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+
 export const deleteCategoryById = async (id) => {
   try {
+    const productCheckResult = await pool.query(
+      'SELECT 1 FROM products WHERE category_id = $1 LIMIT 1', [id]
+    );
+
+    if (productCheckResult.rows.length > 0) {
+      throw new Error('Cannot delete category because it is associated with products');
+    }
+
     const result = await pool.query('DELETE FROM categories WHERE id = $1 RETURNING *', [id]);
     return result.rows;
   } catch (error) {
     throw error;
   }
-}
+};

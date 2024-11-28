@@ -31,7 +31,7 @@ const ExpericenSection = () => {
   return (
     <div className='container mx-auto bg-white lg:mt-16 my-8'>
       <div className='text-center'>
-        <h4>Shopping Experience</h4>
+        <h2>Shopping Experience</h2>
       </div>
 
       <div className='grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-2 mt-8 lg:px-0 px-4'>

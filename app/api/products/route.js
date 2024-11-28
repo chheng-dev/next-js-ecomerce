@@ -1,10 +1,39 @@
+import { products } from "@/lib/productData";
 import { createProduct, getListProducts } from "@/models/productModel";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+// export async function GET() {
+//   try {
+//     const products = await getListProducts();
+//     return NextResponse.json(products);
+//   } catch (error) {
+// console.log(error);
+// return NextResponse.json({
+//   error,
+//   message: 'Failed to fetch a products'
+// }, {
+//   status: 500
+// });
+//   }
+// }
+export async function GET(request) {
   try {
-    const products = await getListProducts();
-    return NextResponse.json(products);
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get('page')) || 1;
+    const limit = parseInt(searchParams.get('limit')) || 10;
+
+    const allProducts = await getListProducts();
+    const start = (page - 1) * limit;
+    const end = start + limit;
+
+    const paginatedProducts = allProducts.slice(start, end);
+
+
+    return NextResponse.json({
+      products: paginatedProducts,
+      total: allProducts.length,
+      hasMore: end < allProducts.length
+    })
   } catch (error) {
     console.log(error);
     return NextResponse.json({

@@ -1,64 +1,48 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import FilterByProductCategories from './left/FilterByProductCategories'
 import FilterByPrice from './left/FilterByPrice'
 import { Accordion, AccordionItem, Checkbox } from "@nextui-org/react";
 import FilterByColor from './left/FilterByColor';
 import FilterBySizes from './left/FilterBySizes';
+import { CategoryService } from '@/app/(client)/services/categoryService';
+import { toast } from 'react-toastify';
+import { generateSlug } from '@/lib/slugHelper';
 
 export default function LeftSidebarFilter() {
+  const [categories, setCategories] = useState([]);
 
   const itemClasses = {
     base: "py-0 w-full",
     title: "font-bold text-medium",
-    // trigger: "px-2 py-0 data-[hover=true]:bg-primary rounded-lg h-14 flex items-center",
     indicator: "text-medium",
     content: "text-medium py-0",
   };
 
-  const productCategoriesContent = [
-    {
-      value: "men",
-      label: "Men"
-    },
-    {
-      value: "women",
-      label: "Women"
-    },
-    {
-      value: "wallets",
-      label: "Wallets"
-    },
-    {
-      value: "bags",
-      label: "Bags"
-    },
-    {
-      value: "belts",
-      label: "Belts"
-    },
-    {
-      value: "shoes",
-      label: "Shoes"
-    },
-    {
-      value: "accessories",
-      label: "Accessories"
-    },
-    {
-      value: "hats",
-      label: "Hats"
-    },
-    {
-      value: "sunglasses",
-      label: "Sunglasses"
-    },
-    {
-      value: "watches",
-      label: "Watches"
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  const getCategories = async () => {
+    try {
+      const response = await CategoryService.fetchCategories();
+      if (response.ok) {
+        setCategories(response.data);
+      } else {
+        toast.error(`Failed to fetch categories:)`);
+      }
+    } catch (error) {
+      toast.error('An error occurred while fetching categories');
+      console.error('Error details:', error);
     }
-  ]
+  }
+
+  const productCategoriesContent = categories.map((item, idx) => ({
+    value: generateSlug(item.title),
+    label: item.title,
+    id: `${item.title}-${idx}`
+  }));
 
   const filterByColorItems = [
     {

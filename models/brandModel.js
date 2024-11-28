@@ -9,6 +9,15 @@ export const getListBrands = async () => {
   }
 }
 
+export const getTopBrands = async () => {
+  try {
+    const result = await pool.query('SELECT * FROM brands ORDER BY updated_at DESC LIMIT 5');
+    return result.rows;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export const createBrand = async (name, slug, icon_url) => {
   try {
     const result = await pool.query(

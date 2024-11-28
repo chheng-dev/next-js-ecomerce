@@ -1,6 +1,4 @@
 import { NextUIProvider } from "@nextui-org/react";
-import "../styles/main.scss";
-
 
 export default function RootLayout({ children }) {
   return (
